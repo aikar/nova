@@ -22,25 +22,25 @@ Example template:
   return {
     'html':[[
       {'head':[{foo: 'bar'},[
-        {'title':'Title of my site'},
+   /*     {'title':'Title of my site'},
         {'link':{type: 'text/css', rel: 'stylesheet', href: '/app.css'}},
         {'link':[{type: 'text/css', rel: 'stylesheet', href: '/other.css'}]},
         nova.scriptSrc(function(args) {
           for(var i; i < 20; i++) {
             
           }
-        })
+        })*/
       ]]},
       {'body':[[
-        {'div':[{id: 'header'},[
+        /*{'div':[{id: 'header'},[
           {'h1':[[{b:'Welcome'},{b:'My Site!'}]]}
-        ]]},
+        ]]},*/
         {'div':[{id: 'content'},[
           {'div':[[
-            'Welcome to my site!',
-            {br:[]},
+            /*'Welcome to my site!',
+            {br:[]},*/
             nova.partial('partials/partial.js', [1,2,3,4,5]),
-            {br:[]},
+            //{br:[]},
             
             nova.scriptSrc(function(bar, userid) {
                 // client side code. Source of this function is copied into the resulting html.
@@ -57,14 +57,15 @@ Example template:
             {a:[{href: 'https://gist.github.com/779018'},'View the source file for this template!']},
             {br:[]},
             {a:[{href: 'http://aikar.co/testnova.html'},'View the whitespace (clean source) version of this page']},
+            
           ]]},
-      
+          /*
           nova.onRender(function(renderVars, render) {
             //console.log('calling blog.getComments');
             blog.getComments(function(comments) {
               render(nova.partial('partials/blogComment',comments));
             });
-          })
+          })*/
         ]]},
         {'div':[{id: 'footer'},[
           {'span':['&copy; My Company 2011']}

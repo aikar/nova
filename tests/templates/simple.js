@@ -16,7 +16,7 @@ Example template:
   },
   blog = {
     getComments: function(cb) {
-      cb([{title: 'Test1'}, {title: 'test2'}]);
+      cb([{title: 'Test1'}]);
     }
   };
   return {
@@ -26,7 +26,7 @@ Example template:
       ]]},
       {'body':[[
         {div:[[
-          nova.scriptSrc(function(bar, userid, x) {
+          /*nova.scriptSrc(function(bar, userid, x) {
             if(window.console && console.log) console.log(bar, userid);
           }, [
             'bar',
@@ -37,7 +37,7 @@ Example template:
               return {boobs: "tits"};
             }
           ]
-        ),
+        ),*/
 
         nova.onRender(function(renderVars, render) {
           //console.log('calling blog.getComments');
