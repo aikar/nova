@@ -135,7 +135,7 @@ window.novaEngine = (function() {
         template.src += node.str;
       } else if (isArray(node)) {
         //console.log('got an array', node);
-        node.forEach(function(nextnode) {
+        jQuery.each(node, function(idx, nextnode) {
           processNode(template, nextnode);
         });
       } else {
@@ -153,7 +153,7 @@ window.novaEngine = (function() {
             var args = null;
 
             if (isArray(opts)) {
-              opts.forEach(function(opt) {
+              jQuery.each(opts, function(idx, opt) {
                 var opttype = typeof opt;
                 if (opttype == 'object') {
                   if (!children.length && isArray(opt)) {
@@ -191,7 +191,7 @@ window.novaEngine = (function() {
               template.src += '>';
               template.endLine();
               template.indentation++;
-              children.forEach(function(childnode) {
+              jQuery.each(children, function(idx, childnode) {
                 processNode(template, childnode);
               });
               template.indentation--;
@@ -282,7 +282,7 @@ window.novaEngine = (function() {
 
           if (aArgs.length) {
             var bFirst = true;
-            aArgs.forEach(function(arg) {
+            jQuery.each(aArgs, function(idx, arg) {
               if (!bFirst) children.push( new rawString(','));
               else bFirst = false;
               if (typeof arg == 'function') {
@@ -360,10 +360,10 @@ window.novaEngine = (function() {
         }
         var result = [];
 
-        collection.forEach(function(partialVars) {
+        jQuery.each(collection, function(idx, partialVars) {
           var partialNodes = [];
 
-          partialTemplate.srcList.forEach(function(chunk) {
+          partialTemplate.jQuery.each(srcList, function(idx, chunk) {
             if (typeof chunk == 'function') {
 
               var onRenderResult = self.onRender(function(renderVars, render) {
@@ -390,7 +390,7 @@ window.novaEngine = (function() {
       }
 
       /*return helpers.onRender(function(renderPartial) {
-        collection.forEach(function(partialVars) {
+        jQuery.each(collection, function(idx, partialVars) {
           partialTemplate.render(partialVars, function(partialRender) {
             partialResult.push(partialRender);
           });
@@ -492,7 +492,7 @@ window.novaEngine = (function() {
                 var origWhitespace = renderTemplate.noWhiteSpace;
 
                 renderTemplate.template.helpers.template = renderTemplate;
-                whatToRender.forEach(function(chunk) {
+                jQuery.each(whatToRender, function(idx, chunk) {
                   if (typeof chunk == 'function') {
                     //console.log('onRenderFunc:', chunk);
                     //if (typeof chunk.noWhiteSpace != 'undefined') template.noWhiteSpace = chunk.noWhiteSpace;
