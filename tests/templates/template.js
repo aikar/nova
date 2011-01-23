@@ -16,7 +16,9 @@ Example template:
   }, 
   blog = {
 	getComments: function(cb) {
-		process.nextTick(function(){cb([{title: 'Test1'}, {title: 'test2'}]);});
+		setTimeout(function(){
+                  cb([{title: 'Test1'}, {title: 'test2'}]);
+                }, 1000);
     }
   };
   return {
