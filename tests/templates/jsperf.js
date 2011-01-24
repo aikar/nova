@@ -1,4 +1,5 @@
-(function(nova) {
+(function a(nova) {
+  console.log(nova);
  return {
   div: [
    [{
@@ -55,15 +56,7 @@
      'class': 'list'
     }, [
     nova.onRender(function(v, r) {
-     var answer = [];
-     v.list.forEach(function(val) {
-      answer.push({
-       li: [{
-        'class': 'item'
-       }, [val]]
-      });
-     });
-     r(answer);
+     r(nova.partial('partials/jsperfpartial', v.list));
     })]]
    }]
   ]
