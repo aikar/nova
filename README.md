@@ -1,15 +1,30 @@
 # Nova
 ## About
-Nova was designed and developed mainly as a 'fun' project with the goal of creating a template engine that was fully written as JavaScript (not JSON), to compliment the current state some apps are at of "Client, Server, Database" using JavaScript.
+> Nova was designed and developed mainly as a 'fun' project 
+  with the goal of creating a template engine that was fully 
+  written as JavaScript (not JSON), to compliment the current 
+  state some apps are at of "Client, Server, Database" 
+  using JavaScript.
 
-Nova will let you write templates with the full power of JavaScript and Node.JS, in a format your current IDE or editor already provides Syntax hilighting for!
+> Nova will let you write templates with the full power of 
+  JavaScript and Node.JS, in a format your current IDE or 
+  editor already provides Syntax hilighting for!
 
-Almost every other template engine has some unique format to it, in which no-ones editor can provide syntax & highlighting support for. But Nova will be 100% pure JavaScript, letting your editor provide nice features such as syntax checking, syntax hilighting, code completion, source formatting, indentation settings etc.
+> Almost every other template engine has some unique format 
+  to it, in which no-ones editor can provide syntax & highlighting 
+  support for. But Nova will be 100% pure JavaScript, letting your 
+  editor provide nice features such as syntax checking, syntax
+  hilighting, code completion, source formatting, 
+  indentation settings etc.
 
-Nova does not conform to the current day ideology of what a template engine should or should not do. Node provides you the tools to do a job, and lets you do your job however you please.
-If you want to read more on Nova vs Template Engine Ideology, check out my [initial Nova blog post][aikar.conova]
+> Nova does not conform to the current day ideology of what a
+  template engine should or should not do. Node provides you the 
+  tools to do a job, and lets you do your job however you please.
 
-Or read other blog topics on Nova: <http://aikar.co/category/projects/nova/>
+>  If you want to read more on Nova vs Template Engine Ideology, 
+  check out my [initial Nova blog post][aikar.conova]
+
+> Or read other blog topics on Nova: <http://aikar.co/category/projects/nova/>
 ***
 ## Install
 
@@ -38,15 +53,16 @@ To install with Git, type
 
 > ### Initial Template Structure
 > ***
->   First off, every template must contain 1 function as its body.
+> First off, every template must contain 1 function as its body.
   Do everything inside of this functions scope
   Next, The root function takes 1 parameter, recommended to name it ***`nova`***
 
 > Your function should look like this:
 
->       function(nova) {
+> 
+        function(nova) {
          return {};
-      }
+        }
 
 >Everything returned by the function is going to be your template.
 
@@ -85,6 +101,74 @@ To install with Git, type
 
 > > > `{div:[[{span:'Hello'}]]}`
 
+> #### Walking a template
+> > Nova parses 1 node at a time, and can handle the following types:
+
+> > Process Node
+> >
+- **Object**  
+  Processed as stated above into HTML. Anything passed as a Child
+  Node to the Node is then walked into and processed also.
+- **Array**  
+  States that the array contains multiple nodes to process, and will 
+  process each item in the array.  
+
+ 
+
+>>>         {span:'Hi'},
+        [
+          {span:'Hi'},
+          {span:'Hi'},
+          {span:'Hi'}
+        ],
+        {span:'Hi'},
+
+>>> Is the same as:
+> > > > 
+    {span:'Hi'},
+    {span:'Hi'},
+    {span:'Hi'},
+    {span:'Hi'},
+    {span:'Hi'},
+ 
+>>> You will not usually directly use arrays in your
+  template, but functions \(described next) may return them
+>> 
+ - **Function**  
+     Any function in your template is executed ***AT COMPILE TIME!***  
+     The return value of the function will be then inserted into the 
+     template for compile.  
+   
+>>> You may not ever need functions, but they are designed to help 
+    save you time in some places.
+
+>>> For example, a static list on a page could be built with a function
+    which just iterates the list building the template syntax for it, 
+    instead of you typing the {li:'Data'} for every entry. And because 
+    this is done on compile time, this is fully cached to pure HTML and
+    does not affect your template performance.
+>>
+ - **Anything Else**  
+   Anything else is considered to be a text block \(strings, integers, floats, booleans), and calls .toString on the element and adds it as a text block.
+>>
+ - **rawString(object)**
+   One of the helpers \(described below) is a rawString object. Text/strings
+   in the template are expected to be just that, Text blocks for the page.
+   And since strings are properly formatted with white space, that could
+   cause you problems when you expect text to not be formatted.
+>>   
+   If you need to add text that will not be formatted \(ie: 
+   passing your own HTML), then simply pass it the rawString helper:
+
+>>>         {div:[[
+           nova.rawString('<script>foo('), 
+           nova.rawString(config.someVar),
+           nova.rawString(')</script>')
+        ]]}
+
+>>> This will keep it all on 1 line. Again this is something you probably 
+    will not ever need, but it is there incase you do.
+ 
 ***
 ## Performance
 > Benchmarking has been done, and Nova will average under 1 millisecond per render,
