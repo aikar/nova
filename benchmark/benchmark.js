@@ -10,8 +10,10 @@
   for (var i = 0; i < count; i++) {
     template.render(i, function(html) {});
   }
-  process.on('exit', function(){
+  
     var diff = new Date().getTime() - start;
-    sys.puts('rendered ' + count + ' times in ' + diff + 'ms!');
-  })
+    sys.puts('rendered ' + count + ' times in ' + diff + 'ms!', 'avg: ' + (diff / count)+'ms!');
+// 1/24/11
+//rendered 10000 times in 4154ms!
+//avg: 0.4154ms!
 })();

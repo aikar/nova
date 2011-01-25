@@ -1,5 +1,4 @@
-(function a(nova) {
-  console.log(nova);
+(function (nova) {
  return {
   div: [
    [{
