@@ -81,7 +81,7 @@ To install with Git, type
     For example, `{div:{id:'foo'}}` is equivalent to `{div:[{id:'foo'}]}`
 
 > > And if you pass anything else other than an array as the value, that value is interpreted as a child node, for example:
-   `{span:1}` would render as `<span>1</span>` and is equivalent to `{span:[[1]]}`
+   `{span:1}` would render as `<span>1</span>` and is equivalent to `{span:\[\[1]]}`
 
 > > Additionally, if a more than 1 value is passed to the array and the first is not an object (attributes), the array is treated as if it was the children nodes array.
 
