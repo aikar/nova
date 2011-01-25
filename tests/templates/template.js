@@ -6,7 +6,7 @@ Goal: A templating engine written completely in javascript - Your IDE/Editor sho
 
 Example template:
 */
-(function(nova, locals){
+(function(nova, rawString){
   /*var user = require('user'),
       blog = require('blog');*/
   var user = {
@@ -16,9 +16,9 @@ Example template:
   }, 
   blog = {
 	getComments: function(cb) {
-		setTimeout(function(){
-                  cb([{title: 'Test1'}, {title: 'test2'}]);
-                }, 1000);
+		
+                cb([{title: 'Test1'}, {title: 'test2'}]);
+                
     }
   };
   return {
@@ -55,15 +55,15 @@ Example template:
             nova.scriptSrc(function(bar, userid) {
                 // client side code. Source of this function is copied into the resulting html.
                 if(window.console && console.log) console.log(bar, userid);
-              }, [
+              }, 
                 'bar',
                 nova.onRender(function(renderVars, render) {
                   //console.log('calling user.getCurrentUserId()');
                   render(user.getCurrentUserId());
                 })
-              ]
+              
             ),
-            
+            '<script> this is escaped!</script>',
             {'a':[{'href': 'https://github.com/Aikar/node-nova/blob/master/tests/templates/template.js'},'View the source file for this template!']},
             {'br':[]},
             {'a':[{'href': 'http://aikar.co/testnova.html'},'View the whitespace (clean source) version of this page']},
