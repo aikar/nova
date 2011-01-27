@@ -1,4 +1,4 @@
-var nova = require('../lib/nova');
+var nova = require('../lib/nova/nova.js');
 var sys = require('util');
 nova(__dirname + '/templates/template', function(template) {
 

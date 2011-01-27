@@ -1,5 +1,5 @@
 (function() {
-  var nova = require('../lib/nova');
+  var nova = require('../lib/nova/nova.js');
   var count = 10000;
   var sys = require('util');
 

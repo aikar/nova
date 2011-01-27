@@ -9,7 +9,7 @@
    list: Array(50).join('test ').split(' ')
   };
   
-  var nova = require('../lib/nova');
+  var nova = require('../lib/nova/nova.js');
   var count = 5000;
   var sys = require('util');
 

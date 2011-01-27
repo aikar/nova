@@ -1,2 +1,2 @@
-module.exports = require('./lib/nova');
+module.exports = require('./lib/nova/nova.js');
 
