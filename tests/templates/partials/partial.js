@@ -1,12 +1,6 @@
-(function(nova) {
-  return {
-    span: [ {'class': 'onRenderPartial'},[
-      nova.onRender(function(number, render) {
-
-        //console.log('<<<',arguments,'1:', number, '2:', render);
-        
-        render(3 * number);
-      })
-    ]]
-  };
-});
+span({'class': 'onRenderPartial'},
+  onRender(function(number, render) {
+    render(3 * number);
+  })
+)
+  

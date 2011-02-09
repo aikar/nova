@@ -6,84 +6,96 @@ Goal: A templating engine written completely in javascript - Your IDE/Editor sho
 
 Example template:
 */
-(function(nova, rawString){
-  /*var user = require('user'),
-      blog = require('blog');*/
-  var user = {
-	getCurrentUserId: function() {
-		return 32;
-	}
+
+var 
+  user = {
+  	getCurrentUserId: function() {
+  		return 32;
+  	}
   }, 
   blog = {
-	getComments: function(cb) {
-		
-                cb([{title: 'Test1'}, {title: 'test2'}]);
-                
+  	getComments: function(cb) {
+      cb([{title: 'Test1'}, {title: 'test2'}]);
     }
   };
-  return {
-    'html':[[
-      {'head':[{foo: 'bar'},[
-        {'title':'Title of my site'},
-        {'link':{type: 'text/css', rel: 'stylesheet', href: '/app.css'}},
-        {'link':[{type: 'text/css', rel: 'stylesheet', href: '/other.css'}]},
-        nova.scriptSrc(function(args) {
-            for(var i; i < 20; i++) {
+  fs = require('fs');
+  
+html (
+  foo(),
+  head ({foo: 'bar'},
+    title ('Title of my site'),
+    link ({type: 'text/css', rel: 'stylesheet', href: '/app.css'}),
+    link ({type: 'text/css', rel: 'stylesheet', href: '/other.css'}),
+    script (function(args) {
+        for(var i; i < 20; i++) {
 
-            }
-          }, 1, 2, nova.onRender(function(v,r) {
-              r(3*2);
-          }), 4, 5
-        )
-      ]]},
-      {'body':[[
-        {'div':[{id: 'header'},[
-          {'h1':[[{b:'Welcome'},{b:'My Site!'}]]}
-        ]]},
-        {'div':[{id: 'content'},[
-          {'div':[[
-            'Welcome to my site!',
-            {'br':[]},
-            nova.partial('partials/partial.js', [1,2,3,4,5]),
-            {'br':[]},
-            {'span':[[{'span':[[{'span':[[{'span':[[{'span':[[{'span':[[{'span':[[
-              nova.onRender(function(vars, render){
-                render(nova.partial('partials/partial.js', [1,2,3,4,5]));
-              })
-            ]]}]]}]]}]]}]]}]]}]]},
-            
-            nova.scriptSrc(function(bar, userid) {
-                // client side code. Source of this function is copied into the resulting html.
-                if(window.console && console.log) console.log(bar, userid);
-              }, 
-                'bar',
-                nova.onRender(function(renderVars, render) {
-                  //console.log('calling user.getCurrentUserId()');
-                  render(user.getCurrentUserId());
-                })
-              
-            ),
-            '<script> this is escaped!</script>',
-            {'a':[{'href': 'https://github.com/Aikar/node-nova/blob/master/tests/templates/template.js'},'View the source file for this template!']},
-            {'br':[]},
-            {'a':[{'href': 'http://aikar.co/testnova.html'},'View the whitespace (clean source) version of this page']},
-            
-          ]]},
-          
-          nova.onRender(function(renderVars, render) {
-            //console.log('calling blog.getComments');
-            blog.getComments(function(comments) {
-              render(nova.partial('partials/blogComment',comments));
-            });
+        }
+      }, 1, 2, onRender(function(v,r) {
+          r(3*2);
+      }), 4, 5
+    )
+  ),
+  body (
+    div ({id: 'header'},
+      h1 (
+        b('Welcome'),
+        b('My Site!')
+      )
+    ),
+    div ({id: 'content'},
+      div (
+        'Welcome to my site!',
+        br,
+        onRender(function(v, render) {
+          fs.readFile('~/.bashrc', function(err, data) {
+            if (err) render('Error' + err);
+            else render(data.toString());
           })
-        ]]},
-        {'div':[{id: 'footer'},[
-          {'span':['&copy; My Company 2011']}
-        ]]}
-      ]]}
-    ]]
-  };
-})
+        }),
+        partial('partials/partial.js', [1,2,3,4,5]),
+        br,
+        span(span(span(span(span(span(span(
+          onRender(function(vars, render){
+            render(partial('partials/partial.js', [1,2,3,4,5]));
+          })
+        ))))))),
+        
+        script(function(bar, userid) {
+            // client side code. Source of this function is copied into the resulting html.
+            if(window.console && console.log) console.log(bar, userid);
+          }, 
+            'bar',
+            onRender(function(renderVars, render) {
+              //console.log('calling user.getCurrentUserId()');
+              render(user.getCurrentUserId());
+            })
+        ),
+        '<script> this is escaped!</script>',
+        a (
+          {'href': 'https://github.com/Aikar/node-nova/blob/master/tests/templates/template.js'},
+          'View the source file for this template!'
+        ),
+        br,
+        a ({'href': 'http://aikar.co/testnova.html'},
+          'View the whitespace (clean source) version of this page'
+        )
+      ),
+      
+      onRender(function(renderVars, render) {
+        //console.log('calling blog.getComments');
+        blog.getComments(function(comments) {
+          render(partial('partials/blogComment',comments));
+        });
+      })
+    ),
+    div ({id: 'footer'},
+      span('&copy; My Company 2011')
+    )
+  )
+)
+function foo(){
+  return "boobs";
+}
 /**
 
 Explanation:
