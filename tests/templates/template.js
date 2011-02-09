@@ -8,20 +8,15 @@ Example template:
 */
 
 var 
-  user = {
-  	getCurrentUserId: function() {
-  		return 32;
-  	}
-  }, 
-  blog = {
-  	getComments: function(cb) {
-      cb([{title: 'Test1'}, {title: 'test2'}]);
-    }
-  };
-  fs = require('fs');
-  
+    blog = {
+    	getComments: function(cb) {
+        cb([{title: 'Test1'}, {title: 'test2'}]);
+      }
+    };
+
+var templateBody = partial('partials/templateBody');
+
 html (
-  foo(),
   head ({foo: 'bar'},
     title ('Title of my site'),
     link ({type: 'text/css', rel: 'stylesheet', href: '/app.css'}),
@@ -30,71 +25,38 @@ html (
         for(var i; i < 20; i++) {
 
         }
-      }, 1, 2, onRender(function(v,r) {
-          r(3*2);
-      }), 4, 5
-    )
+    })
   ),
   body (
     div ({id: 'header'},
       h1 (
-        b('Welcome'),
-        b('My Site!')
+        b ('Welcome'),
+        b ('My Site!')
       )
     ),
     div ({id: 'content'},
-      div (
-        'Welcome to my site!',
-        br,
-        onRender(function(v, render) {
-          fs.readFile('~/.bashrc', function(err, data) {
-            if (err) render('Error' + err);
-            else render(data.toString());
-          })
-        }),
-        partial('partials/partial.js', [1,2,3,4,5]),
-        br,
-        span(span(span(span(span(span(span(
-          onRender(function(vars, render){
-            render(partial('partials/partial.js', [1,2,3,4,5]));
-          })
-        ))))))),
-        
-        script(function(bar, userid) {
-            // client side code. Source of this function is copied into the resulting html.
-            if(window.console && console.log) console.log(bar, userid);
-          }, 
-            'bar',
-            onRender(function(renderVars, render) {
-              //console.log('calling user.getCurrentUserId()');
-              render(user.getCurrentUserId());
-            })
-        ),
-        '<script> this is escaped!</script>',
-        a (
-          {'href': 'https://github.com/Aikar/node-nova/blob/master/tests/templates/template.js'},
-          'View the source file for this template!'
-        ),
-        br,
-        a ({'href': 'http://aikar.co/testnova.html'},
-          'View the whitespace (clean source) version of this page'
-        )
-      ),
+    
+      templateBody,
       
       onRender(function(renderVars, render) {
         //console.log('calling blog.getComments');
         blog.getComments(function(comments) {
           render(partial('partials/blogComment',comments));
         });
-      })
+      }),
+      
+      helloWorld()
     ),
     div ({id: 'footer'},
-      span('&copy; My Company 2011')
+      span ('&copy; My Company 2011')
     )
   )
-)
-function foo(){
-  return "boobs";
+);
+
+function helloWorld(){
+  // example that function DECLARATIONS are ok at bottom of template
+  // function ASSIGNMENTS are not!
+  return "Hello World!";
 }
 /**
 
