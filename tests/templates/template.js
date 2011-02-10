@@ -37,6 +37,9 @@ html (
     div ({id: 'content'},
     
       templateBody,
+      ul(['foo', 'bar', 'baz']),
+      ol({id:'boo'}, ['foo', [{id:1},'bar'], a({foo:'bar'}, 'baz') ]),
+      ul(li('foo'), li('bar'), li('baz')),
       
       onRender(function(renderVars, render) {
         //console.log('calling blog.getComments');
@@ -49,7 +52,20 @@ html (
     ),
     div ({id: 'footer'},
       span ('&copy; My Company 2011')
-    )
+    ),
+    script({foo: 'bar'}),
+    script('../clientjs/test'),
+    css({
+      body: {
+        div: {
+          '#someid': {
+            background: '#FFF'
+          },
+          background: '#AAA'
+        },
+        background: '#000'
+      },
+    })
   )
 );
 
