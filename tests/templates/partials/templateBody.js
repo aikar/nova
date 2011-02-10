@@ -7,17 +7,16 @@ var fs = require('fs'),
 div (
   'Welcome to my site!',
   br,
-  onRender(function(v, render) {
-    fs.readFile('/etc/passwd', function(err, data) {
-      if (err) render('Error' + err);
-      else render(data.toString());
-    })
-  }),
-  partial('partials/partial.js', [1,2,3,4,5]),
+  
+  //partial('partial.js', [1,2,3,4,5]),
   br,
   span(span(span(span(span(span(span(
     onRender(function(vars, render){
-      render(partial('partials/partial.js', [1,2,3,4,5]));
+      //console.log("multi span onrender ran with", this.indentation, this.rendering);
+      render(
+        partial('partial.js', [1])
+      );
+      return this;
     })
   ))))))),
   
