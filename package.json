@@ -1,0 +1,18 @@
+{
+  "name": "nova",
+  "description": "A JavaScript syntax based template engine for Node.JS",
+  "version": "0.1.0",
+  "homepage": "http://aikar.co/nova",
+  "repository": {
+    "type": "git",
+    "url": "github.com:Aikar/node-nova.git"
+  },
+  "author": "Aikar <Aikar@Aikar.co> (http://aikar.co)",
+  "main": "lib/nova/nova.js",
+  "directories": {
+    "lib": "lib/nova"
+  },
+  "engines": {
+    "node": ">=4.0"
+  }
+}

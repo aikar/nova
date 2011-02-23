@@ -25,7 +25,7 @@ html (
         for(var i; i < 20; i++) {
 
         }
-    })
+    }, 'foo', renderVar('foo'))
   ),
   body (
     div ({id: 'header'},
@@ -50,12 +50,16 @@ html (
       
       helloWorld()
     ),
+    renderVar('foo'),
+    renderVar('bar.baz'),
     div ({id: 'footer'},
       span ('&copy; My Company 2011')
     ),
-    script({foo: 'bar'}),
-    script('../clientjs/test'),
-    css({
+    script({foo: 'bar'}, function(){
+      //test
+    }),
+    script('../clientjs/test')
+    /*,css({
       body: {
         div: {
           '#someid': {
@@ -65,7 +69,7 @@ html (
         },
         background: '#000'
       },
-    })
+    })*/
   )
 );
 
