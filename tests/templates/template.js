@@ -58,6 +58,11 @@ html (
     script({foo: 'bar'}, function(){
       //test
     }),
+    function(compileVars) {
+      return JSON.stringify(compileVars);
+    },
+    br,
+    br(),
     script('../clientjs/test')
     /*,css({
       body: {
