@@ -1,0 +1,18 @@
+{
+  "insertOutput": 0, 
+  "keyboard_shortcut": "", 
+  "name": "GITGUI", 
+  "parseRegex": "", 
+  "runIn": "no-console", 
+  "operateOnSelection": 0, 
+  "value": [
+    "git gui"
+  ], 
+  "cwd": "%p", 
+  "env": "", 
+  "doNotOpenOutputWindow": 0, 
+  "showParsedOutputList": 0, 
+  "type": "command", 
+  "parseOutput": 0, 
+  "icon": "file:///usr/share/git-gui/lib/git-gui.ico"
+}
