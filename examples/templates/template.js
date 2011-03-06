@@ -7,10 +7,13 @@ Goal: A templating engine written completely in javascript - Your IDE/Editor sho
 Example template:
 */
 
-var 
+var
     blog = {
     	getComments: function(cb) {
-        cb([{title: 'Test1'}, {title: 'test2'}]);
+        cb([
+					{title: 'Test1', 'msg':'Hello 1'},
+					{title: 'test2', 'msg':'Hello 2'}
+					]);
       }
     };
 
@@ -35,19 +38,19 @@ html (
       )
     ),
     div ({id: 'content'},
-    
+
       templateBody,
       ul(['foo', 'bar', 'baz']),
       ol({id:'boo'}, ['foo', [{id:1},'bar'], a({foo:'bar'}, 'baz') ]),
       ul(li('foo'), li('bar'), li('baz')),
-      
+
       onRender(function(renderVars, render) {
         //console.log('calling blog.getComments');
         blog.getComments(function(comments) {
           render(partial('partials/blogComment',comments));
         });
       }),
-      
+
       helloWorld()
     ),
     renderVar('foo'),
@@ -129,4 +132,3 @@ Partials will also cache
 
 Template files dynamically recompile on modification.
  */
-
