@@ -2,7 +2,7 @@
   "name": "nova",
   "description": "A JavaScript syntax based template engine for Node.JS",
   "version": "0.1.0",
-  "homepage": "http://aikar.co/nova",
+  "homepage": "http://aikar.co/category/projects/nova/",
   "repository": {
     "type": "git",
     "url": "github.com:Aikar/node-nova.git"
