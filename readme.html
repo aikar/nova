@@ -7,7 +7,7 @@
        Remove this if you use the .htaccess -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-  <title>readme</title>
+  <title>Nova - Documentation</title>
   <meta name="description" content="" />
   <meta name="generator" content="Studio 3 http://aptana.com/" />
   <meta name="author" content="Daniel" />
@@ -372,6 +372,7 @@
       <div class="sep"></div>
       <div id="doc.helpers.enhanced">
         <h3>Enhanced HTML Tags</h3>
+        <h4>UL and OL</h4>
         <p>
           the UL and OL tags have been overloaded with Nova to assist in populating a list a little bit easier.
           If either tag are used in the following formats:
@@ -423,13 +424,30 @@
         <p>
           This is especially useful when processing the results of a function call or a renderVar.
         </p>
-
+        <h4>script</h4>
         <p>
-          *nova.scriptSrc(function(){}, [var1, [var2 ...]])**
-          If you need to include inline JavaScript on your page (such as tracking snippets) you
-          may include the source of the script tag directly as a function instead of trying to build
-          the string. You can write client side code directly into the template, but it will be copied
-          directly to the client instead of ran server side.
+          The script tag has also been overloaded to provide rich functionality.
+          <br/>
+          Basic helper:
+        </p>
+        <pre>
+
+          script(stringUrlToJSFile)
+        </pre>
+        <p>
+          calling with a first param of string will automatically create a &lt;script href="url" type="text/javascript"&gt;&gt;/script&gt;
+          filling out the rest of the attributes for you.<br/><br/>
+          But to even more so help with inline script tags, you may pass a function as the first parameter and optional arguments.
+        </p>
+          <pre>
+
+            script(function, optionalArrayOfArgs)
+            // or optional args not as array
+            script(function, arg1, arg2, arg3)
+          </pre>
+        <p>
+          When using this syntax, the body of the function is never executed, but instead its SOURCE is copied into the template instead.
+          This lets you write clean inline javascript without having to use string concatenation.
         </p>
         <p>
           You may also pass data that will be passed to the code on client side, like so:
@@ -441,9 +459,7 @@
             head (
               script (function(siteName, userName) {
                   alert('Hello ' + userName + '! Welcome to ' + siteName + '!');
-                }, config.siteTitle, onRender(function(vars, render) {
-                  render(vars.userName);
-                })
+                }, config.siteTitle, renderVars('userName')
               )
             )
           )
