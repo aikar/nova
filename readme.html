@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 
-  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame 
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
        Remove this if you use the .htaccess -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
@@ -44,6 +44,11 @@
       background: #000;
       margin: 5px 0 15px;
     }
+    pre {
+      background: #eee;
+      border-top: 1px solid #999;
+      border-left: 1px solid #999;
+    }
   </style>
 </head>
 
@@ -68,7 +73,7 @@
       <p class="indent2"><a href="#doc.helpers.onrender">- onRender</a></p>
       <p class="indent2"><a href="#doc.helpers.partial">- partial / include</a></p>
       <p class="indent2"><a href="#doc.helpers.extensions">- Extensions</a></p>
-      
+
       <p>                <a href="#performance">Performance</a></p>
       <p>                <a href="#bugs">Bugs</a></p>
       <p>                <a href="#contibuting">Constributing</a></p>
@@ -85,7 +90,7 @@
         state some apps are at of "Client, Server, Database"
         using JavaScript.
       </p>
-      
+
       <p>
         Nova will let you write templates with the full power of
         JavaScript and Node.JS, in a format your current IDE or
@@ -112,7 +117,7 @@
         Or read other blog topics on Nova: <a href='http://aikar.co/category/projects/nova/'>http://aikar.co/category/projects/nova/</a>
       </p>
     </div>
-    <div class="sep"/>
+    <div class="sep"></div>
     <div id="install">
       <h1>Installing Nova</h1>
       <ul>
@@ -120,17 +125,17 @@
           <h4>NPM</h4>
           <p>
           To install with npm, type
-      
+
           `npm install nova`
-      
+
           Then in your project `require('nova');`
           </p>
         </li>
         <li>
           <h4>GIT clone</h4>
-          
+
             To install with Git, type
-           
+
             <ul>
               <li>As a submodule of a GIT controlled project:
                 <ol>
@@ -153,29 +158,53 @@
         </li>
       </ul>
     </div>
-    <div class="sep"/>
+    <div class="sep"></div>
     <div id="documentation">
       <h1>Documentation</h1>
       <div id="doc.structure">
         <h2>Initial Template Structure</h2>
         <p>
-          First off, every template must contain 1 function as its body.
-          Do everything inside of this functions scope
-          Next, The root function takes 1 parameter, recommended to name it ***`nova`***
+          A template file is treated almost in the same concept of an HTML/XML document, in that it
+          should have ONE root node. In HTML this is usually always &lt;html&gt;.
+          <br/>
+          Nova uses (in the preffered syntax) a full JavaScript syntax based off of function calls, so a template looks like this:
         </p>
+        <pre>
+
+          html (
+            head (
+              title ('Hello')
+            ),
+            body (
+              h1 ('Title'),
+              p ('Page Content')
+            )
+          )
+        </pre>
         <p>
-          Your function should look like this:
+          Nova also supports partial templates, so that means all partials must be wrapped in a container element.
+          <br/>
+          Every template is evaluated on compile time, and the last value returned
+          at the end of the file is going to be the result of your template.<br/>
+          Similar to how eval works. <br/><br/>
+          So if you have the following:
         </p>
-  
-        <code>
-      function(nova) {
-        return {};
-      }
-        </code>
+
+        <pre>
+
+          html(
+            head(
+              title('Hello')
+            )
+          )
+
+          h1()
+        </pre>
         <p>
-          Everything returned by the function is going to be your template.
+          Only the h1 is going to be returned, because you have 2 sections in your template.
+          Only 1 root node may be at the end of your file, as that will be the result of the compile.
         </p>
-      </div>    
+      </div>
       <div id="doc.syntax">
         <h2>Nova Template Syntax</h2>
         <div id="doc.syntax.raw">
@@ -184,7 +213,7 @@
           this is how nodes are represented in Nova and technically can be used.
         	<br />
           A DOM node in a Nova template is represented as an object, like so:
-        	<br />  
+        	<br />
           <code>{html:[{args}, [childrennodes]</code>
         	<br />
           As you see here, It's a simple 1 property Object, who's value should be an array.
@@ -195,26 +224,26 @@
         	<br />
           And if you pass anything else other than an array as the value, that value is interpreted as a child node, for example:
           <code>{span:1}</code> would render as <code><span>1</span></code> and is equivalent to <code>{span:\[\[1]]}</code>
-        	<br />  
+        	<br />
           Additionally, if a more than 1 value is passed to the array and the first is not an object (attributes), the array is treated as if it was the children nodes array.
-        	<br />  
+        	<br />
           For example:
           <pre>{div:['Hello', 'to you sir!']}</pre>
         	<br />
           is equivalent to
           <pre>{div:[['Hello', 'to you sir!']]}</pre>
-        	<br /> 
+        	<br />
           Nova tries to make it as hard as possible for you to confuse it. Almost any syntax will work.
           The only exception is passing Nova syntax nodes to the array, since they are objects, so the
           following is <em>NOT</em> valid:
         	<br />
           <code>{div:[{span:'Hello'}]}</code>
-        	<br /> 
+        	<br />
           There is no way for Nova to know if you intended that to be an attribute or a child node, so you must use
         	<br />
           <code>{div:[[{span:'Hello'}]]}</code>
         </div>
-        <div id="doc.syntax.walking">  
+        <div id="doc.syntax.walking">
           <h3>Walking a Template</h3>
           <p>
             Nova parses 1 node at a time, and can handle the following types:
@@ -240,19 +269,19 @@
                     span('Hi'),
                     span('Hi')
                   ],
-                  (span:'Hi'),
+                  span('Hi'),
               </code>
               <p>
                 Is the same as:
               </p>
               <code>
-                  (span:'Hi'),
-                  (span:'Hi'),
-                  (span:'Hi'),
-                  (span:'Hi'),
-                  (span:'Hi'),
+                  span('Hi'),
+                  span('Hi'),
+                  span('Hi'),
+                  span('Hi'),
+                  span('Hi'),
               </code>
-              
+
               <p>
                 You will not usually directly use arrays in your
                 template, but functions (described next) may return them
@@ -283,6 +312,7 @@
                 Anything else is considered to be a text block \(strings, integers, floats,
                 booleans), and calls .toString on the element and adds it as a text block.
               </p>
+              <p>HTML Entities such as &lt;, &gt;, and &amp; are replaced with entity tags.</p>
             </li>
             <li>
               <h4>rawString(object)</h4>
@@ -315,29 +345,85 @@
     <div id="doc.helpers">
       <h2>Template Helpers</h2>
       <p>
-
         Nova provides some utility functions for you to use in the nova variable
-        that is passed to your root template function 
+        that is passed to your root template function
         <i>(refer to Initial Template Structure)</i>
       </p>
       <p>
         You may call these anywhere you would normally be able to call a plain DOM Node
         Object.
       </p>
-      <div class="sep"/>
+      <div class="sep"></div>
       <div id="doc.helpers.html">
         <h3>HTML Tags</h3>
         <p>
-          // TODO:
+          All known HTML tags according to <a href='http://www.w3schools.com/html5/html5_reference.asp'
+          target="_blank">W3Schools List</a> have a predefined helper function.
+          so an &lt;a&gt; tag can be written as a() or more accurately, a({href:'url'}, 'Link Text').
+        </p>
+        <p>
+          If I have missed a tag, please report it, but you can also add your own tags by calling
+        </p>
+        <pre>require('nova').addHTMLTags(arrayOfTags)</pre>
+        <p>
+          where arrayOfTags is like ['fb', 'foo'], which will add an fb() and foo() tag for &lt;fb&gt; and &lt;foo&gt;
         </p>
       </div>
-      <div class="sep"/>
+      <div class="sep"></div>
       <div id="doc.helpers.enhanced">
         <h3>Enhanced HTML Tags</h3>
         <p>
-          // TODO:
+          the UL and OL tags have been overloaded with Nova to assist in populating a list a little bit easier.
+          If either tag are used in the following formats:
         </p>
-        
+          <ol id="id">
+            <li>ul(arrayOfElements)</li>
+            <li>ul(objectAttributes, arrayOfElements)</li>
+          </ol>
+        <p>
+          Then nova will use all of the elements of the array as children LI. So
+        </p>
+        <pre>
+
+          ul([1,2,3,4,5])
+        </pre>
+        <p>
+          will render as
+        </p>
+        <pre>
+
+          &lt;ul&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;2&lt;/li&gt;
+            &lt;li&gt;3&lt;/li&gt;
+            &lt;li&gt;4&lt;/li&gt;
+            &lt;li&gt;5&lt;/li&gt;
+          &lt;/ul&gt;
+        </pre>
+        <p>
+          And
+        </p>
+        <pre>
+
+          ul({class: 'list', id:'myList'}, [1,2,3,4,5])
+        </pre>
+        <p>
+          will render as
+        </p>
+        <pre>
+
+          &lt;ul class="list" id="myList"&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;2&lt;/li&gt;
+            &lt;li&gt;3&lt;/li&gt;
+            &lt;li&gt;4&lt;/li&gt;
+            &lt;li&gt;5&lt;/li&gt;
+          &lt;/ul&gt;
+        </pre>
+        <p>
+          This is especially useful when processing the results of a function call or a renderVar.
+        </p>
+
         <p>
           *nova.scriptSrc(function(){}, [var1, [var2 ...]])**
           If you need to include inline JavaScript on your page (such as tracking snippets) you
@@ -348,7 +434,8 @@
         <p>
           You may also pass data that will be passed to the code on client side, like so:
         </p>
-        <pre><code>
+        <pre>
+
           var config = require('../config');
           html (
             head (
@@ -360,22 +447,23 @@
               )
             )
           )
-        </code></pre>
+        </pre>
         <p>
           On the view of the page the users browser would alert('Hello &lt;user&gt;! Welcome to &lt;sitetitle&gt;!')
           as the is rendered like so:
         </p>
-        <pre><code>
+        <pre>
+
            &lt;script type="text/javascript"&gt;
              (function(siteName, userName) {
                alert('Hello ' + userName + '! Welcome to ' + siteName + '!');
              })('Site Title', 'UserName');
            &lt;/script&gt;
-        </code></pre>
-        
-        
+        </pre>
+
+
       </div> <!-- end enhanced -->
-      <div class="sep"/>
+      <div class="sep"></div>
       <div id="doc.helpers.onrender">
         <h3>onRender</h3>
         <span>Declaration: <b>onRender(function(renderVars, render) { })</b></span>
@@ -394,39 +482,42 @@
         <p>
           For example, in other template engines your code may look like this:
         </p>
-        <pre><code>
+        <pre>
+
           span('Hello ', onRender(function(vars) {
             return vars.userName;
           }))
-        </code></pre>
+        </pre>
         <p>
           But in Nova, it's ran Async so you need to pass the result to a callback like so:
         </p>
-        <pre><code>
+        <pre>
+
           span('Hello ', onRender(function(vars, render) {
             render(vars.userName);
           }))
-        </code></pre>
+        </pre>
         <p>
           With this method, you could call some async operation which its callback can call render();
         </p>
-        <pre><code>
+        <pre>
+
           span('Hello ', onRender(function(vars, render) {
             some.asyncOp(vars.someValue, function(result) {
               render(result.someValue);
             });
           }))
-        </code></pre>
+        </pre>
         <p>
-          Now note, even though its async, the visitor will not get the html 
+          Now note, even though its async, the visitor will not get the html
           (from the final callback on the call to .render()), until this op finishes.
           Other visitors templates can still render in this time though.
         </p>
         <p>
-          <b>***WARNING:***</b> I strongly encourage you to not use alot async operations 
+          <b>***WARNING:***</b> I strongly encourage you to not use alot async operations
           in your templates, as under specific circumstances it could cause your template
-          to render slower than it could have. A single async operation on a template 
-          render would generally have no impact to the speed of a page load, but 
+          to render slower than it could have. A single async operation on a template
+          render would generally have no impact to the speed of a page load, but
           multiple at different steps of a render could impact it.
         </p>
         <p>
@@ -434,7 +525,7 @@
           async operations in a render would not hurt your performance at all, and this warning will be removed.
         </p>
       </div> <!-- end onRender -->
-      <div class="sep"/>
+      <div class="sep"></div>
       <div id="doc.helpers.partial">
         <h3>partial / include</h3>
         <span>Declaration: <b>partial('filename'[, optionalArray])</b></span>
@@ -452,38 +543,38 @@
           will override any onRender function inside the partial templates renderVars.
         </p>
         <p>
-          For example, you include a partial with `nova.partial('partial', ['foo', 'bar']);`
+          For example, you include a partial with `nova.partial('partial', [{foo:'foo'}, {foo:'bar'}]);`
         </p>
         <p>
           And the partials source is:
         </p>
-        <pre><code>
-          span(onRender(function(vars, render) {
-            render(vars);
-          })
-        </code></pre>
+        <pre>
+
+          span(partialVar('foo'))
+        </pre>
         <p>
           and then you render the main template with `template.render('baz')`
           Then your resulting output will be
         </p>
-        <pre><code>
+        <pre>
+
           &lt;span&gt;foo&lt;/span&gt;&lt;span&gt;bar&lt;/span&gt;
-        </code></pre>
+        </pre>
         <p>
           As you see since you passed 2 variables in the array to nova.partial, 2 copies of the
           template were rendered, and the onRender functions inside the template received the
           array values instead of the main onRender. However, if you still want to access the MAIN
           onRender vars instead of the values passed to `nova.partial`, they will be in the third
-          variable of the render function: 
+          variable of the render function:
         </p>
-        <pre><code>
+        <pre>
         nova.onRender(function(partialVars, render, renderVars) {
-        </code></pre>
+        </pre>
         <p>
           On non partial renders, the 3rd arg is essentially a duplicate of the first.
         </p>
       </div> <!-- end helpers.partial -->
-      <div class="sep"/>
+      <div class="sep"></div>
       <div id="doc.helpers.rawstring">
         <h3>rawString</h3>
         <span>Declaration: <b>nova.rawString(string)</b></span>
@@ -494,7 +585,7 @@
         </p>
       </div> <!-- end helpers.rawString -->
     </div><!-- end documentation-->
-    <div class="sep"/>
+    <div class="sep"></div>
     <div id="performance">
       <h1>Performance</h1>
       <p>
@@ -525,34 +616,35 @@
         that Nova provides.
       </p>
     </div> <!-- end performance -->
-    <div class="sep"/>
+    <div class="sep"></div>
     <div id="bugs">
       <h1>Bugs</h1>
       <p>
         File bugs at GitHub please <a href='https://github.com/Aikar/node-nova/issues'>Github Issues</a>
       </p>
     </div> <!-- end bugs -->
-    <div class="sep"/>
+    <div class="sep"></div>
     <div id="contributing">
       <h1>Contributing</h1>
       <p>
         Fork, commit, send pull request.
       </p>
     </div> <!-- end contributing -->
-    <div class="sep"/>
+    <div class="sep"></div>
     <div id="contributors">
       <h1>Contributors</h1>
       <p>
         None yet.
       </p>
     </div> <!-- end contributors -->
-    <div class="sep"/>
+    <div class="sep"></div>
     <div id="license">
       <h1>License</h1>
       <p>
         Nova is licensed under the MIT license.
       </p>
       <pre>
+
 Copyright (c) 2011 Daniel Ennis [Aikar@Aikar.co][email]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
