@@ -214,7 +214,7 @@
         	<br />
           A DOM node in a Nova template is represented as an object, like so:
         	<br />
-          <code>{html:[{args}, [childrennodes]</code>
+          <code>{html:[{args}, [childrennodes]]}</code>
         	<br />
           As you see here, It's a simple 1 property Object, who's value should be an array.
           Args and children nodes are optional, so a plain <code>{br:[]}</code> would render as <code><br/></code>
@@ -435,7 +435,7 @@
           script(stringUrlToJSFile)
         </pre>
         <p>
-          calling with a first param of string will automatically create a &lt;script href="url" type="text/javascript"&gt;&gt;/script&gt;
+          calling with a first param of string will automatically create a &lt;script href="url" type="text/javascript"&gt;&lt;/script&gt;
           filling out the rest of the attributes for you.<br/><br/>
           But to even more so help with inline script tags, you may pass a function as the first parameter and optional arguments.
         </p>
