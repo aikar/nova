@@ -214,16 +214,16 @@
         	<br />
           A DOM node in a Nova template is represented as an object, like so:
         	<br />
-          <code>{html:[{args}, [childrennodes]]}</code>
+          <pre>{html:[{args}, [childrennodes]]}</pre>
         	<br />
           As you see here, It's a simple 1 property Object, who's value should be an array.
-          Args and children nodes are optional, so a plain <code>{br:[]}</code> would render as <code><br/></code>
+          Args and children nodes are optional, so a plain <pre>{br:[]}</pre> would render as <pre><br/></pre>
         	<br />
           If you do not pass an array as a value to the object key, Nova will guess as to what you intended.
           For example, `{div:{id:'foo'}}` is equivalent to `{div:[{id:'foo'}]}`
         	<br />
           And if you pass anything else other than an array as the value, that value is interpreted as a child node, for example:
-          <code>{span:1}</code> would render as <code><span>1</span></code> and is equivalent to <code>{span:\[\[1]]}</code>
+          <pre>{span:1}</pre> would render as <pre><span>1</span></pre> and is equivalent to <pre>{span:\[\[1]]}</pre>
         	<br />
           Additionally, if a more than 1 value is passed to the array and the first is not an object (attributes), the array is treated as if it was the children nodes array.
         	<br />
@@ -237,11 +237,11 @@
           The only exception is passing Nova syntax nodes to the array, since they are objects, so the
           following is <em>NOT</em> valid:
         	<br />
-          <code>{div:[{span:'Hello'}]}</code>
+          <pre>{div:[{span:'Hello'}]}</pre>
         	<br />
           There is no way for Nova to know if you intended that to be an attribute or a child node, so you must use
         	<br />
-          <code>{div:[[{span:'Hello'}]]}</code>
+          <pre>{div:[[{span:'Hello'}]]}</pre>
         </div>
         <div id="doc.syntax.walking">
           <h3>Walking a Template</h3>
@@ -262,7 +262,7 @@
                 States that the array contains multiple nodes to process, and will
                 process each item in the array.
               </p>
-              <code>
+              <pre>
                   span('Hi'),
                   [
                     span('Hi'),
@@ -270,17 +270,17 @@
                     span('Hi')
                   ],
                   span('Hi'),
-              </code>
+              </pre>
               <p>
                 Is the same as:
               </p>
-              <code>
+              <pre>
                   span('Hi'),
                   span('Hi'),
                   span('Hi'),
                   span('Hi'),
                   span('Hi'),
-              </code>
+              </pre>
 
               <p>
                 You will not usually directly use arrays in your
@@ -326,13 +326,13 @@
                 If you need to add text that will not be formatted \(ie:
                 passing your own HTML), then simply pass it the rawString helper:
               </p>
-              <code>
+              <pre>
                   div(
                      nova.rawString('&lt;script&gt;foo('),
                      nova.rawString(config.someVar),
                      nova.rawString(')&lt;/script&gt;')
                   )
-              </code>
+              </pre>
               <p>
                 This will keep it all on 1 line. Again this is something you probably
                 will not ever need, but it is there incase you do.
