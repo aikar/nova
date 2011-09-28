@@ -139,18 +139,10 @@
             <ul>
               <li>As a submodule of a GIT controlled project:
                 <ol>
-                  <li>- `cd /your/project` </li>
-                  <li>- `git submodule add git@github.com:Aikar/node-nova.git &lt;path/to/libs/nova>&gt;</li>
-                  <li>- `git submodule init`</li>
-                  <li>- `git submodule update`</li>
-                  <li>- then in your project `require('./path/to/libs/nova');`</li>
-                </ol>
-              </li>
-              <li>- As a git clone to non GIT project
-                <ol>
-                  <li>- `cd /your/project/libs/`</li>
-                  <li>- `git clone git@github.com:Aikar/node-nova.git nova`</li>
-                  <li>- then in your project `require('./path/to/libs/nova');`</li>
+                  <li>- cd /your/project </li>
+                  <li>- git submodule add git://github.com:aikar/nova node_modules/nova</li>
+                  <li>- git submodule update --init</li>
+                  <li>- then in your project require('nova');</li>
                 </ol>
               </li>
             </ul>
