@@ -29,7 +29,7 @@
 
 Because Markdown seems pretty inconsistent with rendering between different implementations, I opted to write the documentation in HTML.
 
-Please see readme.html instead -- I will link this to github pages when done.
+Please see <http://aikar.github.com/nova/> instead
 
 ***
 ## License
