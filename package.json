@@ -13,6 +13,6 @@
     "lib": "lib/nova"
   },
   "engines": {
-    "node": ">=4.0"
+    "node": ">=0.4.0"
   }
 }
