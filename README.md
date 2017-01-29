@@ -1,5 +1,7 @@
 # Nova
 ## About
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/aikar/nova.svg)](https://greenkeeper.io/)
 > Nova was designed and developed mainly as a 'fun' project
   with the goal of creating a template engine that was fully
   written as JavaScript (not JSON), to compliment the current
